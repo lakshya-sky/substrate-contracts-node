@@ -1,0 +1,25 @@
+[package]
+name = "account-abstraction-examples"
+version = "0.0.0"
+authors = ["Darshan Kathiriya"]
+edition = "2021"
+publish = false
+
+license = "Apache-2.0 OR GPL-3.0"
+repository = "https://github.com/lakshya-sky/substrate-contracts-node"
+description = "Account Abstraction example usage"
+
+[dev-dependencies]
+subxt = { git = "https://github.com/lakshya-sky/subxt", branch = "master" }
+tokio = { version = "1.8", features = ["rt-multi-thread", "macros", "time"] }
+sp-keyring = { git = "https://github.com/lakshya-sky/substrate", package = "sp-keyring", branch = "polkadot-v0.9.34" }
+futures = "0.3.13"
+codec = { package = "parity-scale-codec", version = "3.0.0", default-features = false, features = [
+  "derive",
+  "full",
+  "bit-vec",
+] }
+hex = "0.4.3"
+tracing-subscriber = "0.3.11"
+sp-core = { git = "https://github.com/lakshya-sky/substrate", package = "sp-core", branch = "polkadot-v0.9.34" }
+sp-weights = { version = "4.0.0", git = "https://github.com/lakshya-sky/substrate", package = "sp-weights", branch = "polkadot-v0.9.34" }

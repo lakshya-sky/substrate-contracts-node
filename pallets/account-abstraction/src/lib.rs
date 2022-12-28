@@ -118,9 +118,8 @@ use frame_support::{
 };
 use frame_system::Pallet as System;
 use pallet_contracts_primitives::{
-	Code, CodeUploadResult, CodeUploadReturnValue, ContractAccessError, AccountExecResult,
-	AccountInstantiateResult, ExecReturnValue, GetStorageResult, InstantiateReturnValue,
-	StorageDeposit,
+	AccountExecResult, AccountInstantiateResult, Code, CodeUploadResult, CodeUploadReturnValue,
+	ContractAccessError, ExecReturnValue, GetStorageResult, InstantiateReturnValue, StorageDeposit,
 };
 use scale_info::TypeInfo;
 use sp_core::crypto::UncheckedFrom;
@@ -163,20 +162,20 @@ pub trait AddressGenerator<T: frame_system::Config> {
 	/// 3. Changing the implementation through a runtime upgrade without a proper storage migration
 	/// would lead to catastrophic misbehavior.
 	fn generate_address(
-		deploying_address: &T::AccountId,
 		code_hash: &CodeHash<T>,
 		salt: &[u8],
+		constructor_calldata: &[u8],
 	) -> T::AccountId;
 }
 
 /// Default address generator.
 ///
-/// This is the default address generator used by contract instantiation. Its result
+/// This is the default address generator used by Account instantiation. Its result
 /// is only dependant on its inputs. It can therefore be used to reliably predict the
 /// address of a contract. This is akin to the formula of eth's CREATE2 opcode. There
 /// is no CREATE equivalent because CREATE2 is strictly more powerful.
 ///
-/// Formula: `hash(deploying_address ++ code_hash ++ salt)`
+/// Formula: `hash(code_hash ++ salt ++ constructor_calldata)`
 pub struct DefaultAddressGenerator;
 
 impl<T> AddressGenerator<T> for DefaultAddressGenerator
@@ -185,15 +184,15 @@ where
 	T::AccountId: UncheckedFrom<T::Hash> + AsRef<[u8]>,
 {
 	fn generate_address(
-		deploying_address: &T::AccountId,
 		code_hash: &CodeHash<T>,
 		salt: &[u8],
+		constructor_calldata: &[u8],
 	) -> T::AccountId {
-		let buf: Vec<_> = deploying_address
+		let buf: Vec<_> = code_hash
 			.as_ref()
 			.iter()
-			.chain(code_hash.as_ref())
 			.chain(salt)
+			.chain(constructor_calldata)
 			.cloned()
 			.collect();
 		UncheckedFrom::unchecked_from(T::Hashing::hash(&buf))
@@ -1062,11 +1061,11 @@ where
 	/// This is the address generation function used by contract instantiation. See
 	/// [`DefaultAddressGenerator`] for the default implementation.
 	pub fn contract_address(
-		deploying_address: &T::AccountId,
 		code_hash: &CodeHash<T>,
 		salt: &[u8],
+		construstor_calldata: &[u8],
 	) -> T::AccountId {
-		T::AddressGenerator::generate_address(deploying_address, code_hash, salt)
+		T::AddressGenerator::generate_address(code_hash, salt, construstor_calldata)
 	}
 
 	/// Returns the code hash of the contract specified by `account` ID.

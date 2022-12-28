@@ -475,6 +475,8 @@ enum FrameArgs<'a, T: Config, E> {
 		executable: E,
 		/// A salt used in the contract address deriviation of the new contract.
 		salt: &'a [u8],
+		/// Constructor Calldata is used in the contract address deriviation of the new account.
+		construstor_calldata: &'a [u8],
 	},
 }
 
@@ -660,6 +662,7 @@ where
 				nonce: <Nonce<T>>::get().wrapping_add(1),
 				executable,
 				salt,
+				construstor_calldata: input_data.as_slice(),
 			},
 			origin,
 			gas_meter,
@@ -742,9 +745,18 @@ where
 
 					(dest, contract, executable, delegate_caller, ExportedFunction::Call, None)
 				},
-				FrameArgs::Instantiate { sender, nonce, executable, salt } => {
-					let account_id =
-						<Contracts<T>>::contract_address(&sender, executable.code_hash(), salt);
+				FrameArgs::Instantiate {
+					sender,
+					nonce,
+					executable,
+					salt,
+					construstor_calldata,
+				} => {
+					let account_id = <Contracts<T>>::contract_address(
+						executable.code_hash(),
+						salt,
+						construstor_calldata,
+					);
 					let trie_id = Storage::<T>::generate_trie_id(&account_id, nonce);
 					let contract =
 						Storage::<T>::new_contract(&account_id, trie_id, *executable.code_hash())?;
@@ -1167,6 +1179,7 @@ where
 				nonce,
 				executable,
 				salt,
+				construstor_calldata: input_data.as_slice(),
 			},
 			value,
 			gas_limit,

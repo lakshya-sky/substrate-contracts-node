@@ -4,6 +4,9 @@ members = [
     'node',
     'runtime',
 ]
+exclude = [
+    'examples'
+]
 
 [profile.release]
 panic = 'unwind'
