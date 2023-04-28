@@ -554,9 +554,7 @@ fn instantiate_and_call_and_deposit_event() {
 			vec![],
 		));
 
-		let constructor_calldata: Vec<u8> = Vec::new();
-		constructor_calldata.extend_from_slice(ALICE.as_ref());
-		let addr = Contracts::contract_address(&code_hash, &[], constructor_calldata.as_slice());
+		let addr = Contracts::contract_address(&code_hash, &[], &[]);
 		assert!(ContractInfoOf::<Test>::contains_key(&addr));
 
 		assert_eq!(

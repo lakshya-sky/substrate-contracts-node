@@ -476,7 +476,7 @@ mod tests {
 				salt: salt.to_vec(),
 			});
 			Ok((
-				Contracts::<Test>::contract_address(&ALICE, &code_hash, salt),
+				Contracts::<Test>::contract_address(&code_hash, salt, data.as_slice()),
 				ExecReturnValue { flags: ReturnFlags::empty(), data: Vec::new() },
 			))
 		}

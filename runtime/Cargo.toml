@@ -50,6 +50,7 @@ pallet-transaction-payment-rpc-runtime-api = { git = "https://github.com/lakshya
 
 pallet-account-abstraction = { path = "../pallets/account-abstraction", default-features = false }
 pallet-contracts-primitives = { path = "../pallets/account-abstraction/primitives", default-features = false }
+primitives = { path = "../primitives", default-features = false }
 
 [build-dependencies]
 substrate-wasm-builder = { git = "https://github.com/lakshya-sky/substrate", package = "substrate-wasm-builder", branch = "polkadot-v0.9.34" }
@@ -63,6 +64,7 @@ std = [
   "frame-support/std",
   "frame-system-rpc-runtime-api/std",
   "frame-system/std",
+  "primitives/std",
   "pallet-authorship/std",
   "pallet-balances/std",
   "pallet-randomness-collective-flip/std",

@@ -23,12 +23,16 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 	let client: Client = OnlineClient::from_url("ws://127.0.0.1:9944").await?;
 	println!("{:?}", client.genesis_hash());
 
-	//let call = runtime::api::tx().account_abstraction().upload_code(
-	//	code,
-	//	storage_deposit_limit,
-	//	determinism,
-	//);
-	let call = runtime::api::tx().balances().transfer(dest, 123_456_789_012_345);
+	let call = runtime::api::tx().account_abstraction().upload_code(
+		code,
+		storage_deposit_limit,
+		Determinism::Deterministic,
+	);
+
+    let t = client.offline().tx().create_unsigned(&call).await?;
+	// let call = runtime::api::tx().balances().transfer(dest, 123_456_789_012_345);
+
+	signer.signer().sign(call);
 
 	let hash = client.tx().sign_and_submit_default(&call, &signer).await?;
 

@@ -1,12 +1,7 @@
 [workspace]
 resolver = "2"
-members = [
-    'node',
-    'runtime',
-]
-exclude = [
-    'examples'
-]
+members = ['node', 'runtime', 'primitives', 'integration-tests']
+exclude = ['examples']
 
 [profile.release]
 panic = 'unwind'

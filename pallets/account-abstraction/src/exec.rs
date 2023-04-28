@@ -757,6 +757,7 @@ where
 						salt,
 						construstor_calldata,
 					);
+					// dbg!(&account_id);
 					let trie_id = Storage::<T>::generate_trie_id(&account_id, nonce);
 					let contract =
 						Storage::<T>::new_contract(&account_id, trie_id, *executable.code_hash())?;
@@ -2858,6 +2859,7 @@ mod tests {
 			let schedule = <Test as Config>::Schedule::get();
 			let min_balance = <Test as Config>::Currency::minimum_balance();
 			let mut gas_meter = GasMeter::<Test>::new(GAS_LIMIT);
+
 			let fail_executable =
 				MockExecutable::from_storage(fail_code, &schedule, &mut gas_meter).unwrap();
 			let success_executable =
@@ -2898,6 +2900,7 @@ mod tests {
 			));
 			assert_eq!(<Nonce<Test>>::get(), 1);
 
+			dbg!("before fail");
 			assert_ok!(MockStack::run_instantiate(
 				ALICE,
 				succ_fail_executable,
@@ -2909,8 +2912,10 @@ mod tests {
 				&[],
 				None,
 			));
+			dbg!("after fail");
 			assert_eq!(<Nonce<Test>>::get(), 2);
 
+			dbg!("before succ");
 			assert_ok!(MockStack::run_instantiate(
 				ALICE,
 				succ_succ_executable,
@@ -2922,6 +2927,7 @@ mod tests {
 				&[],
 				None,
 			));
+			dbg!("after succ");
 			assert_eq!(<Nonce<Test>>::get(), 4);
 		});
 	}
