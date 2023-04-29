@@ -54,7 +54,7 @@ pub trait WeightInfo {
 	fn reinstrument(c: u32, ) -> Weight;
 	fn call_with_code_per_byte(c: u32, ) -> Weight;
 	fn instantiate_with_code(c: u32, s: u32, ) -> Weight;
-	fn instantiate(s: u32, ) -> Weight;
+	fn instantiate(d: u32, s: u32, ) -> Weight;
 	fn call() -> Weight;
 	fn upload_code(c: u32, ) -> Weight;
 	fn remove_code() -> Weight;
@@ -250,10 +250,11 @@ impl<T: frame_system::Config> WeightInfo for SubstrateWeight<T> {
 	// Storage: Contracts OwnerInfoOf (r:1 w:1)
 	// Storage: System EventTopics (r:2 w:2)
 	/// The range of component `s` is `[0, 1048576]`.
-	fn instantiate(s: u32, ) -> Weight {
+	fn instantiate(d: u32, s: u32, ) -> Weight {
 		// Minimum execution time: 185_950 nanoseconds.
 		Weight::from_ref_time(173_152_122)
 			// Standard Error: 4
+			.saturating_add(Weight::from_ref_time(1_559).saturating_mul(d.into()))
 			.saturating_add(Weight::from_ref_time(1_559).saturating_mul(s.into()))
 			.saturating_add(T::DbWeight::get().reads(8))
 			.saturating_add(T::DbWeight::get().writes(7))
@@ -1518,10 +1519,11 @@ impl WeightInfo for () {
 	// Storage: Contracts OwnerInfoOf (r:1 w:1)
 	// Storage: System EventTopics (r:2 w:2)
 	/// The range of component `s` is `[0, 1048576]`.
-	fn instantiate(s: u32, ) -> Weight {
+	fn instantiate(d: u32, s: u32, ) -> Weight {
 		// Minimum execution time: 185_950 nanoseconds.
 		Weight::from_ref_time(173_152_122)
 			// Standard Error: 4
+			.saturating_add(Weight::from_ref_time(1_559).saturating_mul(d.into()))
 			.saturating_add(Weight::from_ref_time(1_559).saturating_mul(s.into()))
 			.saturating_add(RocksDbWeight::get().reads(8))
 			.saturating_add(RocksDbWeight::get().writes(7))

@@ -192,6 +192,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f52f63c5c1316a16a4b35eaac8b76a98248961a533f061684cb2a7cb0eafb6c6"
 
 [[package]]
+name = "array-bytes"
+version = "6.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d9b1c5a481ec30a5abd8dfbd94ab5cf1bb4e9a66be7f1b3b322f2f1170c200fd"
+
+[[package]]
 name = "arrayref"
 version = "0.3.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2800,6 +2806,7 @@ name = "integration-tests"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "array-bytes 6.1.0",
  "contract-build",
  "contract-metadata",
  "contract-transcode",
@@ -2807,6 +2814,7 @@ dependencies = [
  "hex",
  "parity-scale-codec",
  "rust_decimal",
+ "scale-info",
  "serde",
  "serde_json",
  "sp-core 20.0.0",
@@ -4246,7 +4254,7 @@ dependencies = [
 name = "pallet-account-abstraction"
 version = "4.0.0-dev"
 dependencies = [
- "array-bytes",
+ "array-bytes 4.2.0",
  "assert_matches",
  "bitflags",
  "env_logger",
@@ -5629,7 +5637,7 @@ name = "sc-cli"
 version = "0.10.0-dev"
 source = "git+https://github.com/lakshya-sky/substrate?branch=polkadot-v0.9.34#fe14442efe91027158173190b424a2a1bae1609a"
 dependencies = [
- "array-bytes",
+ "array-bytes 4.2.0",
  "chrono",
  "clap",
  "fdlimit",
@@ -5980,7 +5988,7 @@ name = "sc-keystore"
 version = "4.0.0-dev"
 source = "git+https://github.com/lakshya-sky/substrate?branch=polkadot-v0.9.34#fe14442efe91027158173190b424a2a1bae1609a"
 dependencies = [
- "array-bytes",
+ "array-bytes 4.2.0",
  "async-trait",
  "parking_lot 0.12.1",
  "serde_json",
@@ -5995,7 +6003,7 @@ name = "sc-network"
 version = "0.10.0-dev"
 source = "git+https://github.com/lakshya-sky/substrate?branch=polkadot-v0.9.34#fe14442efe91027158173190b424a2a1bae1609a"
 dependencies = [
- "array-bytes",
+ "array-bytes 4.2.0",
  "async-trait",
  "asynchronous-codec",
  "bitflags",
@@ -6088,7 +6096,7 @@ name = "sc-network-light"
 version = "0.10.0-dev"
 source = "git+https://github.com/lakshya-sky/substrate?branch=polkadot-v0.9.34#fe14442efe91027158173190b424a2a1bae1609a"
 dependencies = [
- "array-bytes",
+ "array-bytes 4.2.0",
  "futures",
  "libp2p",
  "log",
@@ -6109,7 +6117,7 @@ name = "sc-network-sync"
 version = "0.10.0-dev"
 source = "git+https://github.com/lakshya-sky/substrate?branch=polkadot-v0.9.34#fe14442efe91027158173190b424a2a1bae1609a"
 dependencies = [
- "array-bytes",
+ "array-bytes 4.2.0",
  "async-trait",
  "fork-tree",
  "futures",
@@ -6140,7 +6148,7 @@ name = "sc-network-transactions"
 version = "0.10.0-dev"
 source = "git+https://github.com/lakshya-sky/substrate?branch=polkadot-v0.9.34#fe14442efe91027158173190b424a2a1bae1609a"
 dependencies = [
- "array-bytes",
+ "array-bytes 4.2.0",
  "futures",
  "hex",
  "libp2p",
@@ -6159,7 +6167,7 @@ name = "sc-offchain"
 version = "4.0.0-dev"
 source = "git+https://github.com/lakshya-sky/substrate?branch=polkadot-v0.9.34#fe14442efe91027158173190b424a2a1bae1609a"
 dependencies = [
- "array-bytes",
+ "array-bytes 4.2.0",
  "bytes",
  "fnv",
  "futures",
@@ -6576,9 +6584,9 @@ dependencies = [
 
 [[package]]
 name = "scale-info"
-version = "2.5.0"
+version = "2.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0cfdffd972d76b22f3d7f81c8be34b2296afd3a25e0a547bd9abe340a4dbbe97"
+checksum = "dfdef77228a4c05dc94211441595746732131ad7f6530c6c18f045da7b7ab937"
 dependencies = [
  "bitvec",
  "cfg-if",
@@ -6590,9 +6598,9 @@ dependencies = [
 
 [[package]]
 name = "scale-info-derive"
-version = "2.5.0"
+version = "2.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "61fa974aea2d63dd18a4ec3a49d59af9f34178c73a4f56d2f18205628d00681e"
+checksum = "53012eae69e5aa5c14671942a5dd47de59d4cdcff8532a6dd0e081faf1119482"
 dependencies = [
  "proc-macro-crate 1.2.1",
  "proc-macro2",
@@ -7236,7 +7244,7 @@ name = "sp-core"
 version = "7.0.0"
 source = "git+https://github.com/lakshya-sky/substrate?branch=polkadot-v0.9.34#fe14442efe91027158173190b424a2a1bae1609a"
 dependencies = [
- "array-bytes",
+ "array-bytes 4.2.0",
  "base58",
  "bitflags",
  "blake2",
@@ -7282,7 +7290,7 @@ version = "20.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7789372146f8ad40d0b40fad0596cb1db5771187a258eabe19b06f00767fcbd6"
 dependencies = [
- "array-bytes",
+ "array-bytes 4.2.0",
  "bitflags",
  "blake2",
  "bounded-collections",

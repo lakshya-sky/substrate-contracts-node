@@ -7,6 +7,10 @@ use std::{
 	fmt::{self, Debug, Display},
 	path::{Path, PathBuf},
 };
+use subxt::{
+	blocks::{self, ExtrinsicEvents},
+	config, tx, Config, OnlineClient,
+};
 
 #[derive(Debug)]
 pub struct ContractArtifacts {
@@ -227,3 +231,25 @@ impl Display for ErrorVariant {
 		}
 	}
 }
+
+pub async fn submit_extrinsic<T, Call, Signer>(
+	client: &OnlineClient<T>,
+	call: &Call,
+	signer: &Signer,
+) -> core::result::Result<blocks::ExtrinsicEvents<T>, subxt::Error>
+where
+	T: Config,
+	Call: tx::TxPayload,
+	Signer: tx::Signer<T>,
+	<T::ExtrinsicParams as config::ExtrinsicParams<T::Index, T::Hash>>::OtherParams: Default,
+{
+	client
+		.tx()
+		.sign_and_submit_then_watch_default(call, signer)
+		.await?
+		.wait_for_in_block()
+		.await?
+		.wait_for_success()
+		.await
+}
+
